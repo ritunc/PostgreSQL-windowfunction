@@ -29,7 +29,7 @@ insert into Employee (emp_name, salary, dept_id, join_date) values
 ('Ian', 68000, 3, '2020-08-19'),
 ('Jack', 52000, 1, '2021-09-25');
 
--- select * from employee
+
 Solve PostgreSQL questions with window function On Employee & Department Schema
 
 Q1.Rank employees by salary using window function.
@@ -39,8 +39,16 @@ rank() over (order by salary desc) as salary_rank
 from employee;
 
 
+
 Q2.Rank employees by salary within each department
 
-select 
+select emp_name, dept_id, salary, 
+rank() over (partition by dept_id order by salary desc) as dep_rank
+from employee;
+
+select e.emp_name, d.dept_name, d.dept_id, e.salary, 
+rank() over (partition by d.dept_name order by e.salary desc) as dep_rank
+from employee e join department d on e.dept_id = d.dept_id;
+
 
 
