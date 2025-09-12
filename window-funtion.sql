@@ -52,3 +52,4 @@ from employee e join department d on e.dept_id = d.dept_id;
 
 
 
+
