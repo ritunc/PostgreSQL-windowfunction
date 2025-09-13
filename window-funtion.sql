@@ -29,7 +29,7 @@ insert into Employee (emp_name, salary, dept_id, join_date) values
 ('Ian', 68000, 3, '2020-08-19'),
 ('Jack', 52000, 1, '2021-09-25');
 
-
+-- select * from employee e join department d on e.dept_id = d.dept_id;
 Solve PostgreSQL questions with window function On Employee & Department Schema
 
 Q1.Rank employees by salary using window function.
@@ -52,4 +52,28 @@ from employee e join department d on e.dept_id = d.dept_id;
 
 
 
+Q3. Find the top 2 highest-paid employees in each department
 
+-- Wrong method
+select emp_name, dept_id, salary, 
+rank() over (partition by dept_id order by salary desc) as rnk
+from employee where rnk <=2;
+
+-- Using CTE
+with ranked as (
+    select emp_name, dept_id, salary,
+           rank() over (partition by dept_id order by salary desc) as rnk
+    from employee
+)
+SELECT DISTINCT ON (salary) emp_name, dept_id, salary, rnk
+FROM ranked
+where rnk <= 3;
+
+-- Using Derived Table (Subquery in FROM)
+SELECT *
+FROM (
+    SELECT emp_name, dept_id, salary,
+           rank() OVER (PARTITION BY dept_id ORDER BY salary DESC) AS rnk
+    FROM employee
+) t
+WHERE rnk <= 2;
