@@ -10,7 +10,7 @@ Explain: In  here RANK asign Rank number to each raw and the over(order by salar
 Q 2.Rank employees by salary within each department.
 Explain: partion by dept_id or dept_name:it create a seperate window, for each department by dept_name or dept_id and name or id are shorted alphabetical order. Inside each department window, employees are ranked based on their salary and join employee table with department table with employee.dept_id corresponding to department.dept_id
 
-Q 3.
+Q 3.Find the top 2 highest-paid employees in each department
 
 Recently, I was working on a query to fetch the top 2 highest-paid employees from each department.
  At first, I wrote something like this ⬇️
